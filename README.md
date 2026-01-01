@@ -17,9 +17,9 @@ This repository documents my daily grind to master **Golang**, build production-
 ---
 
 ## 🛠️ The Tech Stack
-* **Language:** Golang (Primary), Node.js (Legacy/Maintenance)
+* **Language:** Golang (Primary), Node.js (Legacy/Maintenance), Rust (learning)
 * **Database:** PostgreSQL, MongoDB
-* **Infrastructure:** Docker, Kubernetes (Learning), AWS
+* **Infrastructure:** Docker, Kubernetes (Learning),
 * **Tools:** Git, Postman, n8n Automation
 
 ## 🏆 Proof of Work
