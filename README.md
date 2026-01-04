@@ -85,7 +85,7 @@ This repository documents my **Non-Negotiable** path to mastering Golang. No ski
     * *Resource:* Master Microservices & Event-Driven Architecture (Akhil Sharma).
     * *Focus:* Prometheus metrics, Grafana Dashboards, pprof Profiling.
 
---- Mastered Go's for loops (including while-style), if with short statements, and switch logic.
+--- 
 
 ## 📝 Daily Log
 *Detailed updates posted daily on [X (Twitter)](https://x.com/KillerPand34973).*
