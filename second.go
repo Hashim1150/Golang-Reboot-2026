@@ -6,7 +6,8 @@ import (
 )
 
 func main() {
-	fmt.Println(">> DAY 3: FLOW CONTROL")
+
+	fmt.Println(">> DAY 2: TOUR OF GO CONCEPTS:- FLOW CONTROL")
 
 	// 1. THE ONLY LOOP: for
 	sum := 0
@@ -40,4 +41,5 @@ func main() {
 		fmt.Println("Something else.")
 	}
 }
+
 
