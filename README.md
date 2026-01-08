@@ -25,7 +25,7 @@ This repository documents my **Non-Negotiable** path to mastering Golang. No ski
 
 ## 🏆 Proof of Work
 * **2nd Runner Up @ DATANYX Hackathon:** Built "Sporacle" – A real-time IoT mushroom monitoring system.
-    * *Role:* Backend dev & (System design) and DB setup.
+    * *Role:* Backend dev & (System design) and DB design & setup.
 
 ---
 
@@ -99,7 +99,7 @@ This repository documents my **Non-Negotiable** path to mastering Golang. No ski
 | **05** | Jan 05 | third.go |  Mastered Pointers and Fixed-size Arrays |
 | **06** | Jan 06 | Forth.go | Slices, Len vs Cap, and the make function |
 | **07** | Jan 08 | fifth.go | Maps, Closures, and Restarting the Grind |
-| **08** | Jan 09 | sixth.go | Maps, Closures, and Restarting the Grind |
+| **08** | Jan 09 | sixth.go | Attaching logic to structs via Receivers. Implemented the Stringer interface for custom formatting.|
 
 
 ---
