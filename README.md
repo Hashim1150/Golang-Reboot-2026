@@ -100,6 +100,8 @@ This repository documents my **Non-Negotiable** path to mastering Golang. No ski
 | **06** | Jan 06 | Forth.go | Slices, Len vs Cap, and the make function |
 | **07** | Jan 08 | fifth.go | Maps, Closures, and Restarting the Grind |
 | **08** | Jan 09 | sixth.go | Attaching logic to structs via Receivers. Implemented the Stringer interface for custom formatting.|
+| **09** | Jan 10 | sixth.go | Attaching logic to structs via Receivers. Implemented the Stringer interface for custom formatting.|
+
 
 
 ---
