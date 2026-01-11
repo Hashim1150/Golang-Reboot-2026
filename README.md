@@ -31,9 +31,9 @@ This repository documents my **Non-Negotiable** path to mastering Golang. No ski
 
 ##  The Roadmap
 
-### Phase 1: The "Theory & Syntax" Foundation (1 week)
+### Phase 1: The "Theory & Syntax" Foundation 
 *Goal: Understand the "Go Way" (Memory, Pointers, Interfaces). No AI coding.*
-- [✅ ] **A Tour of Go:** Finish every exercise.
+- [✅] **A Tour of Go:** Finish every exercise.
 - [ ] **Effective Go:** Deep dive into "Pointers vs. Values" and "Interfaces".
 - [ ] **Go Spec:** Understand Slices internals.
 
