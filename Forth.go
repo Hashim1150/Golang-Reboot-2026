@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(">> DAY 5: THE POWER OF SLICES")
+	fmt.Println(">> DAY 4: THE POWER OF SLICES")
 
 	// 1. SLICES ARE WINDOWS TO ARRAYS
 	names := [4]string{"Hashim", "Abdullah", "Shaad", "Ahmed"} // An Array
