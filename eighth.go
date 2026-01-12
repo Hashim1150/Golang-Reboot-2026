@@ -11,7 +11,7 @@ func sum(s []int, c chan int) {
 }
 
 func main() {
-	fmt.Println(">> DAY 9: CONCURRENCY & CHANNELS")
+	fmt.Println(">> DAY 8: CONCURRENCY & CHANNELS")
 
 	s := []int{7, 2, 8, -9, 4, 0}
 	c := make(chan int)
@@ -25,4 +25,5 @@ func main() {
 
 	fmt.Println("Result X, Y, and Total:", x, y, x+y)
 }
+
 
