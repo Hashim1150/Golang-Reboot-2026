@@ -1,6 +1,6 @@
 # Golang Journey 2026: From Scrap PC to Backend Architect
 
-> **Current Status:** Day 10 of the Repo!✨
+> **Current Status:** Day 11 of the Repo!✨
 > **Location:** Hyderabad, India  
 > **Objective:** Senior Architect Sequence (Node.js -> High-Perf Go)
 
@@ -20,7 +20,8 @@ This repository documents my **Non-Negotiable** path to mastering Golang. No ski
 * **Language:** Golang (Expert Focus), Node.js (Legacy) , rust (learning) 
 * **Core:** TCP, WebSockets, gRPC, Concurrency (Goroutines/Channels) , DSA 
 * **Database:** PostgreSQL (sqlc), MongoDB, Redis
-* **Infrastructure:** Docker, Kubernetes, AWS, RabbitMQ
+-+
+  * **Infrastructure:** Docker, Kubernetes, AWS, RabbitMQ
 * **Observability:** Prometheus, Grafana
 
 ## 🏆 Proof of Work
