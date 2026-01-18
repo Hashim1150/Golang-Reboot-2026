@@ -5,26 +5,61 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"strings"
+	"time"
 )
 
 func main() {
-	// 1. Connect to the server we built yesterday
-	conn, err := net.Dial("tcp", "localhost:6379")
+	// 1. Establish connection with a timeout. 
+	// Don't wait forever if the server is dead.
+	address := "localhost:6379"
+	conn, err := net.DialTimeout("tcp", address, 5*time.Second)
 	if err != nil {
-		fmt.Println("Error connecting:", err)
+		fmt.Printf(" CRITICAL ERROR: Could not connect to %s: %v\n", address, err)
 		return
 	}
 	defer conn.Close()
 
-	// 2. Read input from the terminal (your scrap PC keyboard)
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("Text to send: ")
-	text, _ := reader.ReadString('\n')
+	fmt.Println("✅ Connected to server. Type 'exit' to quit.")
 
-	// 3. Send the bytes across the wire
-	fmt.Fprintf(conn, text + "\n")
+	// 2. Initialize readers ONCE. Efficiency matters.
+	terminalReader := bufio.NewReader(os.Stdin)
+	serverReader := bufio.NewReader(conn)
 
-	// 4. Wait for the ACK (Acknowledgment) from the server
-	message, _ := bufio.NewReader(conn).ReadString('\n')
-	fmt.Print("Server replied: " + message)
+	for {
+		// 3. Get user input
+		fmt.Print("👉 Message: ")
+		input, err := terminalReader.ReadString('\n')
+		if err != nil {
+			fmt.Println("Error reading input:", err)
+			break
+		}
+
+		// Clean the input
+		input = strings.TrimSpace(input)
+		if input == "exit" {
+			fmt.Println("👋 Shutting down...")
+			break
+		}
+
+		// 4. Set a Deadline for the WRITE and READ
+		// This tells the OS: "If this takes longer than 2 seconds, kill the task."
+		conn.SetDeadline(time.Now().Add(2 * time.Second))
+
+		// 5. Send data
+		_, err = fmt.Fprintf(conn, input+"\n")
+		if err != nil {
+			fmt.Println(" Failed to send data:", err)
+			break
+		}
+
+		// 6. Read response
+		message, err := serverReader.ReadString('\n')
+		if err != nil {
+			fmt.Println(" Server timeout or connection lost:", err)
+			break
+		}
+
+		fmt.Printf(" Server replied: %s", message)
+	}
 }
