@@ -1,6 +1,6 @@
 # Golang Journey 2026: From Scrap PC to Backend Architect
 
-> **Current Status:** Day 11 of the Repo!✨
+> **Current Status:** Day 15 of the Repo!✨
 > **Location:** Hyderabad, India  
 > **Objective:** Senior Architect Sequence (Node.js -> High-Perf Go)
 
@@ -106,7 +106,8 @@ This repository documents my **Non-Negotiable** path to mastering Golang. No ski
 | **11** | Jan 12 | effective_go.go |  Effective Go - Allocation, Literals, and Defer |
 | **12** | Jan 13 | language_spec.go | Deep dive into Slice internals and memory layout. Understanding the 24-byte SliceHeader. |
 | **13** | Jan 14 | language_spec.go |  |
-| **14** | Jan 15 | language_spec.go | Deep dive into Slice internals and memory layout. Understanding the 24-byte SliceHeader. |
+| **14** | Jan 15 | language_spec.go | . |
+| **14** | Jan 15 | language_spec.go | . |
 
 
 ---
