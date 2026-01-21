@@ -107,7 +107,7 @@ This repository documents my **Non-Negotiable** path to mastering Golang. No ski
 | **12** | Jan 13 | language_spec.go | Deep dive into Slice internals and memory layout. Understanding the 24-byte SliceHeader. |
 | **13** | Jan 14 | language_spec.go | updated and completed the language specs |
 | **14** | Jan 15 | tcp_udp.go | implemented tcp connection in go |
-| **15** | Jan 16 | tcp-udp.go |  |
+| **15** | Jan 16 | tcp-client.go |  |
 
 
 ---
