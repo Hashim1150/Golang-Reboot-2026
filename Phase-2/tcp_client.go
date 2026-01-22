@@ -3,62 +3,106 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"net"
 	"os"
 	"strings"
 	"time"
 )
 
+const (
+	serverAddr      = "localhost:6379"
+	connectTimeout  = 5 * time.Second
+	operationTimeout = 3 * time.Second
+	bufferSize      = 4096
+)
+
 func main() {
-	// 1. Establish connection with a timeout. 
-	address := "localhost:6379"
-	conn, err := net.DialTimeout("tcp", address, 5*time.Second)
+	if err := run(); err != nil {
+		fmt.Fprintf(os.Stderr, "❌ FATAL: %v\n", err)
+		os.Exit(1)
+	}
+}
+
+func run() error {
+	// 1. Establish connection with explicit timeout
+	conn, err := net.DialTimeout("tcp", serverAddr, connectTimeout)
 	if err != nil {
-		fmt.Printf(" CRITICAL ERROR: Could not connect to %s: %v\n", address, err)
-		return
+		return fmt.Errorf("connection failed to %s: %w", serverAddr, err)
 	}
 	defer conn.Close()
 
-	fmt.Println("Connected to server. Type 'exit' to quit.")
+	fmt.Printf("✅ Connected to %s\n", serverAddr)
+	fmt.Println("📝 Commands: Type your message or 'exit' to quit\n")
 
-	// 2. Initialize readers ONCE. Efficiency matters.
-	terminalReader := bufio.NewReader(os.Stdin)
-	serverReader := bufio.NewReader(conn)
+	// 2. Initialize buffered readers with custom buffer size for performance
+	terminalReader := bufio.NewReaderSize(os.Stdin, bufferSize)
+	serverReader := bufio.NewReaderSize(conn, bufferSize)
 
 	for {
-		// 3. Get user input
-		fmt.Print(" Message: ")
+		// 3. Prompt and read user input
+		fmt.Print("➤ ")
 		input, err := terminalReader.ReadString('\n')
 		if err != nil {
-			fmt.Println("Error reading input:", err)
-			break
+			if err == io.EOF {
+				fmt.Println("\n👋 Connection closed")
+				return nil
+			}
+			return fmt.Errorf("input read failed: %w", err)
 		}
 
-		// Clean the input
+		// 4. Sanitize and validate input
 		input = strings.TrimSpace(input)
-		if input == "exit" {
-			fmt.Println(" Shutting down...")
-			break
+		
+		if input == "" {
+			continue // Skip empty inputs
+		}
+		
+		if strings.ToLower(input) == "exit" {
+			fmt.Println("👋 Shutting down gracefully...")
+			return nil
 		}
 
-		// 4. Set a Deadline for the WRITE and READ
-		// 2 sec time out
-		conn.SetDeadline(time.Now().Add(2 * time.Second))
+		// 5. Send command with timeout protection
+		if err := sendCommand(conn, input); err != nil {
+			return fmt.Errorf("send failed: %w", err)
+		}
 
-		// 5. Send data
-		_, err = fmt.Fprintf(conn, input+"\n")
+		// 6. Receive response with timeout protection
+		response, err := receiveResponse(conn, serverReader)
 		if err != nil {
-			fmt.Println(" Failed to send data:", err)
-			break
+			return fmt.Errorf("receive failed: %w", err)
 		}
 
-		// 6. Read response
-		message, err := serverReader.ReadString('\n')
-		if err != nil {
-			fmt.Println(" Server timeout or connection lost:", err)
-			break
-		}
-
-		fmt.Printf(" Server replied: %s", message)
+		fmt.Printf("⬅️  Server: %s\n", response)
 	}
+}
+
+// sendCommand writes data to connection with deadline enforcement
+func sendCommand(conn net.Conn, command string) error {
+	conn.SetWriteDeadline(time.Now().Add(operationTimeout))
+	
+	// Use buffered writer for efficiency
+	writer := bufio.NewWriter(conn)
+	_, err := writer.WriteString(command + "\n")
+	if err != nil {
+		return err
+	}
+	
+	return writer.Flush()
+}
+
+// receiveResponse reads server reply with deadline enforcement
+func receiveResponse(conn net.Conn, reader *bufio.Reader) (string, error) {
+	conn.SetReadDeadline(time.Now().Add(operationTimeout))
+	
+	response, err := reader.ReadString('\n')
+	if err != nil {
+		if netErr, ok := err.(net.Error); ok && netErr.Timeout() {
+			return "", fmt.Errorf("server response timeout")
+		}
+		return "", err
+	}
+	
+	return strings.TrimSpace(response), nil
 }
