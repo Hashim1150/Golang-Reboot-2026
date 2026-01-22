@@ -74,7 +74,7 @@ func run() error {
 			return fmt.Errorf("receive failed: %w", err)
 		}
 
-		fmt.Printf("⬅️  Server: %s\n", response)
+		fmt.Printf("  Server: %s\n", response)
 	}
 }
 
